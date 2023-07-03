@@ -458,3 +458,24 @@ a:focus {
 .layout_padding-bottom{
     padding-bottom: 90px;
 }
+
+.food_section .filters_menu{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+    list-style-type: none;
+    margin: 45px 0 20px 0;
+}
+.heading_container.heading_center{
+    text-align: center;
+}
+.food_section .filters_menu li {
+    padding: 7px 25px;
+    cursor: pointer;
+    border-radius: 25px;
+}
+.food_section .filters_menu li.active {
+    background-color: #222831;
+    color: #ffffff;
+}

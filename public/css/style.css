@@ -376,3 +376,85 @@ a:focus {
     height: 20px;
     background-color: #ffbe33;
 }
+
+
+
+.offer_section{
+    position: relative;
+    padding-top: 45px;
+}
+
+
+.offer_section .box{
+    display: flex;
+    align-items: center;
+    margin-top: 45px;
+    border-radius: 5px;
+    padding: 20px 15px;
+    background-color: #222831;
+    color: #ffffff;
+}
+
+.offer_section .box .img-box{
+    width: 175px;
+    min-width: 175px;
+    height: 175px;
+    margin-right: 15px;
+    position: relative;
+    transition: all 0.1 0.5s;
+    border-radius: 100%;
+    border: 5px solid #ffbe33;
+    overflow: hidden;
+}
+
+.offer_section .box .img-box img {
+    width: 100%;
+    transition: all .2s;
+}
+
+.offer_section .box .detail-box h5 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 24px;
+    margin: 0;
+}
+
+.offer_section .box .detail-box h6 {
+    font-family: 'Dancing Script', cursive;
+    margin: 10px 0;
+}
+
+.offer_section .box .detail-box h6 span {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.offer_section .box .detail-box a {
+    display: inline-block;
+    padding: 10px 30px;
+    background-color: #ffbe33;
+    color: #ffffff;
+    border-radius: 45px;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    border: none;
+}
+
+.offer_section .box .detail-box a:hover {
+    background-color: #e69c00;
+}
+
+.offer_section .box .detail-box a svg {
+    width: 20px;
+    height: auto;
+    margin-left: 5px;
+    fill: #ffffff;
+}
+
+.offer_section .box:hover .img-box img {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.layout_padding-bottom{
+    padding-bottom: 90px;
+}

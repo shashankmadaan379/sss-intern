@@ -7,5 +7,13 @@ app.set("view engine", "ejs");
 app.listen(8080);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/", function (req, res) {
-  res.render("pages/index");
+  var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "root",
+    database: "thepizzastory",
+  });
+  con.query("SELECT * FROM products", (err, result) => {
+    res.render("pages/index", { result: result });
+  });
 });

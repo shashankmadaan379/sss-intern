@@ -3,9 +3,11 @@ var ejs = require("ejs");
 var bodyParser = require("body-parser");
 var app = express();
 var mysql = require("mysql2");
+var session = require("express-session");
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({ secret: "secret" }));
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",

@@ -181,17 +181,17 @@
 
 
 
-
+               <% cart.forEach(function(item) { %>
                     <tr>
                         <td>
                             <div class="product-info">
-                                <img style="width: 75px; height: 75px" src="images/f1.png">
+                                <img style="width: 75px; height: 75px" src="images/<%=item.image %>">
                                 <div>
-                                    <p>Burger</p>
-                                    <small><span>$</span>199</small>
+                                    <p><% =item.name %></p>
+                                    <small><span>$</span><% =item.price %></small>
                                     <br>
-                                    <form>
-
+                                    <form method="post" action="/remove_product">
+                                        <input type="hidden" id="<%=item.id%>" name="id">
                                         <input type="submit" name="remove_btn" class="remove-btn" value="remove">
                                     </form>
                                 </div>
@@ -199,29 +199,28 @@
                         </td>
 
                         <td>
-                            <form>
+                            <form method="post" action="/edit_product_quantity">
+                                <input type="hidden" id="<%=item.id%>" name="id">
                                 <input type="submit" value="-" class="edit-btn " name="decrease_product_quantity_btn">
 
-                                <input type="text" name="quantity" value="1" readonly="">
+                                <input type="text" name="quantity" value="<%=item.quantity%>" readonly="">
 
                                 <input type="submit" value="+" class="edit-btn" name="increase_product_quantity_btn">
                             </form>
                         </td>
 
                         <td>
-                            <span class="product-price">$199</span>
+                            <span class="product-price">$ <% =item.price * item.quantity%></span>
                         </td>
                     </tr>
 
-
+<%}) %>
                 </table>
-
-
                 <div class="cart-total">
                     <table>
 
                         <tr>
-                            <td>Total</td>
+                            <td><%=total%></td>
 
                             <td></td>
 
@@ -234,7 +233,7 @@
 
                 <div class="checkout-container">
 
-                    <form>
+                    <form action="/checkout" method="get">
                         <input type="submit" class="btn checkout-btn" value="Checkout" name="">
                     </form>
 

@@ -49,6 +49,15 @@ app.get("/", function (req, res) {
     res.render("pages/index", { result: result });
   });
 });
+app.get("/products", function (req, res) {
+  con.query("SELECT * FROM products", (err, result) => {
+    if (err) {
+      console.error("Error fetching products:", err);
+      return;
+    }
+    res.render("pages/products", { products: result });
+  });
+});
 app.listen(8080, () => {
   console.log("Server is running on port 8080");
 });
@@ -81,4 +90,68 @@ app.post("/add_to_cart", function (req, res) {
     res.redirect("/cart");
   }
 });
-app.get("/cart", function (req, res) {});
+app.get("/cart", function (req, res) {
+  var cart = req.session.cart;
+  var total = req.session.total;
+  res.render("pages/cart", { cart: cart, total: total });
+});
+app.post("/edit_product_quantity", function (req, res) {
+  var id = req.body.id;
+  var quantity = req.body.quantity;
+  var increase_btn = req.body.increase_product_quantity;
+  var decrease_btn = req.body.decrease_product_quantity;
+  var cart = req.session.cart;
+  if (increase_btn) {
+    for (let i = 0; i < cart.length; i++) {
+      if (cart[i].id == id) {
+        if (cart[i].quantity > 0) {
+          cart[i].quantity = parseInt(cart[i].quantity) + 1;
+        }
+      }
+    }
+  }
+  if (decrease_btn) {
+    for (let i = 0; i < cart.length; i++) {
+      if (cart[i].id == id) {
+        if (cart[i].quantity > 1) {
+          cart[i].quantity = parseInt(cart[i].quantity) + -1;
+        }
+      }
+    }
+  }
+  calculateTotal(cart, req);
+  res.redirect("/cart");
+});
+
+app.get("/checkout", function (req, res) {
+  var total = req.session.total;
+  con.query("SELECT * FROM products", (err, result) => {
+    res.render("pages/checkout", { result: result });
+  });
+});
+app.post("/place_order", function (req, res) {
+  var name = req.body.name;
+  var email = req.body.email;
+  var phone = req.body.phone;
+  var city = req.body.city;
+  var address = req.body.address;
+  var cost = req.session.total;
+  var status = "not paid";
+  var date = new Date();
+  con.connect((err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      var query =
+        "INSERT INTO orders(cost,name,email,status,city,address,phone,date) VALUES ?";
+      var values = [[cost, name, email, status, address, phone, date]];
+      con.query(query, [values], (err, result) => {
+        res.redirect("/payment");
+      });
+    }
+  });
+});
+
+app.get("/payment", function (req, res) {
+  res.render("pages/payment");
+});

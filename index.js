@@ -138,20 +138,31 @@ app.post("/place_order", function (req, res) {
   var cost = req.session.total;
   var status = "not paid";
   var date = new Date();
+  var product_ids = "";
+  var cart = req.session.cart;
+  for (let i = 0; i < cart.length; i++) {
+    product_ids = product_ids + cart[i].id;
+  }
   con.connect((err) => {
     if (err) {
       console.log(err);
     } else {
-      var query =
-        "INSERT INTO orders(cost,name,email,status,city,address,phone,date) VALUES ?";
-      var values = [[cost, name, email, status, address, phone, date]];
-      con.query(query, [values], (err, result) => {
-        res.redirect("/payment");
-      });
+      for (let i = 0; i < cart.length; i++) {
+        var query =
+          "INSERT INTO orders(cost,name,email,status,city,address,phone,date,product_ids) VALUES ?";
+        var values = [
+          [cost, name, email, status, address, phone, date, product_ids],
+        ];
+        con.query(query, [values], (err, result) => {});
+      }
+      res.redirect("/payment");
     }
   });
 });
 
 app.get("/payment", function (req, res) {
   res.render("pages/payment");
+});
+app.get("/about", function (req, res) {
+  res.render("pages/about");
 });
